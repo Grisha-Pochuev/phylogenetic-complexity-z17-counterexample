@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use or discuss this verification package, please cite this repository."
+title: "A degree-18 counterexample to the group-order bound for phylogenetic complexity"
+type: software
+authors:
+  - family-names: Pochuev
+    given-names: Grisha
+date-released: 2026-09-08
+repository-code: "https://github.com/Grisha-Pochuev/phylogenetic-complexity-z17-counterexample"
+abstract: >-
+  Explicit degree-18 counterexample over Z/17Z to the proposed bound phi(G) <= |G|,
+  accompanied by a complete manuscript and exact independent verification scripts.
