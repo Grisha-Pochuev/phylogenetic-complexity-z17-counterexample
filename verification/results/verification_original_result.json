@@ -1,0 +1,16 @@
+{
+  "group_order": 17,
+  "rows_per_table": 18,
+  "columns": 3,
+  "allowed_row_types": 22,
+  "compatible_column_multisets": true,
+  "zero_row_sums": true,
+  "no_common_row_type": true,
+  "kernel_A_minus_B": [2,1,-3,-2,3,-1,-2,2,1,1,-1,-1,-2,1,1,-2,1,1,-1,4,-2,-1],
+  "exact_rank": 21,
+  "nullity": 1,
+  "certified_minor_determinant": 17,
+  "fiber_size_by_linear_algebra": 2,
+  "fiber_size_by_enumeration": 2,
+  "enumeration_group_states": 372
+}
