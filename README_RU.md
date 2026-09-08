@@ -22,21 +22,29 @@
 
 ## Что лежит в репозитории
 
-- `paper/phylogenetic_Z17_counterexample_EN.pdf` — английская пятистраничная рукопись.
-- `paper/phylogenetic_Z17_counterexample_EN.tex` — её LaTeX-исходник.
+- `paper/phylogenetic_Z17_counterexample_EN.tex` — основной LaTeX-исходник английской рукописи; автор указан как **Grisha Pochuev**.
+- `paper/phylogenetic_Z17_counterexample_EN.pdf` — компактная пятистраничная копия для быстрого просмотра. Полную типографскую версию можно пересобрать командой `make paper`.
 - `proof/phylogenetic_Z17_complete_proof_RU.md` — расширенное доказательство на русском.
-- `data/tables_Z17.json` — две развёрнутые таблицы, типы строк и кратности.
+- `data/tables_Z17.json` — две развёрнутые таблицы, типы строк и векторы кратностей.
 - `verification/verify_phylogenetic_Z17.py` — основная точная проверка без сторонних библиотек.
-- `verification/audit_Z17_independent.py` — независимая проверка другим алгоритмом,
-  без использования ранга матрицы.
+- `verification/audit_Z17_independent.py` — независимая проверка другим алгоритмом, без использования ранга матрицы.
 - `verification/audit_Z17_symbolic.py` — дополнительная символьная проверка через SymPy.
 - `verification/results/` — сохранённые результаты и журнал повторного локального запуска.
-- `INDEPENDENT_VERIFICATION.md` — короткий протокол независимого аудита.
-- `.github/workflows/verify.yml` — workflow GitHub Actions, который запускается **только вручную**.
+- `INDEPENDENT_VERIFICATION.md` — протокол независимого аудита.
+- `Makefile` — команды для проверки и сборки рукописи.
+- `requirements-symbolic.txt` — зафиксированная версия необязательной зависимости SymPy.
+- `CITATION.cff` — данные для цитирования.
+- `.github/workflows/verify.yml` — GitHub Actions, который запускается **только вручную**.
 
 ## Быстрая проверка
 
 Две основные проверки требуют только Python 3.9+:
+
+```bash
+make verify-core
+```
+
+или непосредственно:
 
 ```bash
 python verification/verify_phylogenetic_Z17.py
@@ -45,26 +53,32 @@ python verification/audit_Z17_independent.py
 
 Ожидаемые факты: 22 допустимых типа строк, точный ранг 21, определитель
 указанного минора 17, ровно две совместимые таблицы, а независимый алгоритм
-считает 96 размеченных заполнений — 24 от A и 72 от B.
+считает 96 размеченных заполнений — 24 от A и 72 от B — при 981 сохранённом состоянии.
 
-Дополнительная проверка:
+Дополнительная символьная проверка:
 
 ```bash
-python -m pip install sympy==1.14.0
-python verification/audit_Z17_symbolic.py
+python -m pip install -r requirements-symbolic.txt
+make verify-symbolic
+```
+
+Пересборка рукописи из исходника при наличии LaTeX:
+
+```bash
+make paper
 ```
 
 ## GitHub Actions
 
-Добавленный workflow не имеет триггера `push` или `pull_request`, поэтому сам по
+Добавленный процесс не имеет триггера `push` или `pull_request`, поэтому сам по
 себе ничего не запускает и не занимает текущие машины. Независимый проверяющий
-может сделать fork и вручную запустить workflow уже на своём лимите GitHub Actions.
+может сделать fork и вручную запустить проверку уже на своём лимите GitHub Actions.
 Можно вообще обойтись без Actions и выполнить два основных скрипта локально.
 
 9 сентября 2026 года все три программы были повторно запущены в изолированной
 локальной среде, без GitHub Actions; сохранённые инварианты воспроизвелись.
-Английский PDF после добавления имени автора **Grisha Pochuev** был заново собран
-из включённого LaTeX-исходника и визуально проверен.
+Основной LaTeX-исходник после добавления имени автора **Grisha Pochuev** был
+скомпилирован локально, а первая страница полученного PDF визуально проверена.
 
 ## Статус внешней проверки
 
