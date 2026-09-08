@@ -1,0 +1,45 @@
+Independent local re-run in an isolated ChatGPT execution environment
+Date: 9 September 2026
+GitHub Actions: NOT USED
+
+Command:
+  python verification/verify_phylogenetic_Z17.py
+
+Key output:
+  18 x 3 tables over Z/17Z
+  zero row sums: PASS
+  corresponding column multisets equal: PASS
+  common row types between A and B: none
+  all 17^3 triples checked
+  allowed row types inside supports: 22
+  exact rational rank: 21
+  nullity: 1
+  certified 21 x 21 minor determinant: 17
+  compatible unordered tables by exact enumeration: exactly 2 (A and B)
+  enumeration group states: 372
+  conclusion: no move changing at most 17 of the 18 rows can leave A nontrivially
+
+Command:
+  python verification/audit_Z17_independent.py
+
+Exact output invariants:
+  labelled fillings total: 96
+  labelled fillings from A: 24
+  labelled fillings from B: 72
+  memoized DP states: 981
+  unordered compatible tables: 2
+  minimum nontrivial move size: 18
+
+Command:
+  python verification/audit_Z17_symbolic.py
+
+Exact output invariants:
+  matrix shape: 23 x 22
+  rank over Q: 21
+  specified minor determinant: 17
+  kernel basis agrees with B-A
+  engine: SymPy 1.14.0 exact rational arithmetic
+
+The English PDF was then rebuilt from the included LaTeX source after setting
+  Author: Grisha Pochuev
+and visually checked on the rendered first page.
