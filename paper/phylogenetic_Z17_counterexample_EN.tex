@@ -1,0 +1,328 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=26mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,array}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\usepackage{float}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\NN}{\mathbb Z_{\geq0}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\Fib}{\mathcal T}
+\title{A degree-18 counterexample to the group-order bound\newline for phylogenetic complexity}
+\author{Grisha Pochuev}
+\date{8 September 2026\\[3pt]\small Working manuscript for independent verification}
+\begin{document}
+\maketitle
+\begin{abstract}
+We exhibit two compatible $18\times3$ tables of zero-sum rows over
+$G=\ZZ/17\ZZ$. Their column multisets admit exactly these two tables,
+up to row permutation, and the tables have disjoint row supports.
+Consequently, no sequence of moves involving at most 17 rows connects
+them. Thus $\phi(\ZZ/17\ZZ,3)\geq18$, contradicting the proposed bound
+$\phi(G)\leq |G|$. The proof consists of explicit data and elementary
+rational linear algebra. We also give a direct ideal-theoretic proof,
+a boundary-point obstruction even to set-theoretic generation in degrees
+at most 17, and reproducible exact checks.
+\end{abstract}
+
+\section{Statement and a general obstruction}
+A flow of length $n$ over a finite abelian group $G$ is a tuple
+$(g_1,\ldots,g_n)$ with $\sum_j g_j=0$ in $G$.
+Two tables of flows are \emph{compatible} if their corresponding columns
+are the same multisets. A move of size at most $d$ replaces at most $d$
+rows with a compatible collection of flows. Tables are considered up to
+permutation of their rows.
+
+This is the table formulation of ideal generation in
+\cite[Section 2]{MV}. The proposed group-order bound and its three-leaf
+special case appear as Conjectures 4.1 and 4.2 there; see also
+\cite[Conjecture 27 in the arXiv version]{SS}.
+
+\begin{theorem}\label{thm:main}
+The tables $A,B$ in Table~\ref{tab:data} are compatible tables over
+$\ZZ/17\ZZ$, each with 18 rows and three columns. Their common column
+multisets admit exactly two tables, namely $A$ and $B$, up to row
+permutation. Every move changing either table has size 18. In particular,
+\[
+ \phi(\ZZ/17\ZZ,n)\geq18\quad\text{for every }n\geq3,
+ \qquad \phi(\ZZ/17\ZZ)>17.
+\]
+\end{theorem}
+
+\begin{lemma}\label{lem:two}
+Suppose a collection of fixed column multisets admits exactly two
+$m$-row tables of flows $A,B$. If $A$ and $B$ have no row type in common,
+they cannot be connected by moves of size less than $m$.
+\end{lemma}
+\begin{proof}
+A move of size less than $m$ preserves at least one original row, so
+cannot take $A$ to $B$. Every move preserves the column multisets; hence
+its result is again $A$ or $B$. No first nontrivial move from $A$ is
+possible, which excludes a chain of any length.
+\end{proof}
+
+\clearpage
+\section{The two explicit tables}
+All entries below are residues modulo 17. A row of type $r_i$ is used
+$\alpha_i$ times in $A$ and $\beta_i$ times in $B$.
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.06}
+\begin{tabular}{rcrr}
+\toprule
+$i$ & $r_i$ & $\alpha_i$ & $\beta_i$\\
+\midrule
+1 & $(1,3,13)$ & 2 & 0\\
+2 & $(1,11,5)$ & 1 & 0\\
+3 & $(1,15,1)$ & 0 & 3\\
+4 & $(7,3,7)$ & 0 & 2\\
+5 & $(7,8,2)$ & 3 & 0\\
+6 & $(7,16,11)$ & 0 & 1\\
+7 & $(8,8,1)$ & 0 & 2\\
+8 & $(8,15,11)$ & 2 & 0\\
+9 & $(10,0,7)$ & 1 & 0\\
+10 & $(10,6,1)$ & 1 & 0\\
+11 & $(10,10,14)$ & 0 & 1\\
+12 & $(10,11,13)$ & 0 & 1\\
+13 & $(11,1,5)$ & 0 & 2\\
+14 & $(11,10,13)$ & 1 & 0\\
+15 & $(11,16,7)$ & 1 & 0\\
+16 & $(14,1,2)$ & 0 & 2\\
+17 & $(14,6,14)$ & 1 & 0\\
+18 & $(14,15,5)$ & 1 & 0\\
+19 & $(15,0,2)$ & 0 & 1\\
+20 & $(15,1,1)$ & 4 & 0\\
+21 & $(15,6,13)$ & 0 & 2\\
+22 & $(15,8,11)$ & 0 & 1\\
+\midrule
+ & Total & 18 & 18\\
+\bottomrule
+\end{tabular}
+\caption{A compatible pair with disjoint row supports.}\label{tab:data}
+\end{table}
+Each row sum is 17 or 34. Write $v^{[m]}$ for $m$ occurrences of $v$.
+The common column multisets are
+\begin{align*}
+ C_1&=\{1^{[3]},7^{[3]},8^{[2]},10^{[2]},11^{[2]},14^{[2]},15^{[4]}\},\\
+ C_2&=\{0^{[1]},1^{[4]},3^{[2]},6^{[2]},8^{[3]},10^{[1]},11^{[1]},15^{[3]},16^{[1]}\},\\
+ C_3&=\{1^{[5]},2^{[3]},5^{[2]},7^{[2]},11^{[2]},13^{[3]},14^{[1]}\}.
+\end{align*}
+Let $S_j=\supp C_j$. Every compatible row lies in $S_1\times S_2\times S_3$.
+For each $a\in S_1$ and $b\in S_2$, its third entry must be $-a-b$ modulo 17.
+Checking membership in $S_3$ gives exactly the 22 types in the table.
+For first entries $1,7,8,10,11,14,15$, the numbers of permitted types are,
+respectively, $3,3,2,4,3,3,4$.
+
+\clearpage
+\section{An elementary kernel computation}
+Let $M$ be the $23\times22$ incidence matrix whose rows are labelled by
+$(j,v)$, with $j=1,2,3$ and $v\in S_j$ in increasing order, and whose
+columns are the types $r_i$:
+\[
+ M_{(j,v),i}=\begin{cases}1,&(r_i)_j=v,\\0,&\text{otherwise.}\end{cases}
+\]
+Thus $Mx$ records the column multiplicities of a table with type counts $x$.
+All equalities involving $M$ below are over $\QQ$, \emph{not} modulo 17.
+
+\begin{lemma}\label{lem:kernel}
+$\ker_{\QQ}M=\QQ(\beta-\alpha)$.
+\end{lemma}
+\begin{proof}
+Let $z\in\ker_{\QQ}M$ and put
+\[
+ a=z_1,\quad b=z_2,\quad d=z_6,\quad e=z_7,\quad
+ f=z_9,\quad g=z_{11},\quad h=z_{17}.
+\]
+The marginal equations for the first two columns give, by successive
+substitution,
+\begin{align*}
+z=(&a,b,-a-b,-a,a-d,d,e,-e,f,b-f-g,g,-b,\\
+   &g+d,-g,-d,-h-a-b-e,h,a+b+e,-f,\\
+   &-g-d+h+a+b+e,-b+f+g-h,-a+d-e).
+\end{align*}
+Conversely, this expression satisfies all first- and second-column
+equations for arbitrary values of the seven parameters.
+The third-column equations for the values $14,7,11,2,5,13$, in that order,
+are
+\begin{align*}
+ g+h&=0,& -a-d+f&=0,& -a+2d-2e&=0,\\
+ -b-d-e-f-h&=0,& a+2b+d+e+g&=0,& a-2b+f-h&=0.
+\end{align*}
+The first three give $h=-g$, $f=a+d$, and $a=2d-2e$.
+The fourth then gives $g=b+4d-e$, while the last two give
+\[
+ 7d-2e+3b=0,\qquad b=9d-5e.
+\]
+Consequently,
+\[
+ 0=7d-2e+3(9d-5e)=34d-17e,
+\]
+so $e=2d$. Substitution gives
+\[
+ (a,b,d,e,f,g,h)=d(-2,-1,1,2,-1,1,-1),
+\]
+and hence
+\begin{align*}
+z=d(&-2,-1,3,2,-3,1,2,-2,-1,-1,1,1,\\
+    &2,-1,-1,2,-1,-1,1,-4,2,1)=d(\beta-\alpha).
+\end{align*}
+The remaining third-column equation, for value 1, is
+$b-d+2e-f-2g+h=0$ and is satisfied. Since the compatible vectors
+$\alpha,\beta$ are distinct, $\beta-\alpha$ is a nonzero element of the
+kernel. This proves the assertion.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Any compatible table has a count vector $x\in\NN^{22}$ with
+$Mx=M\alpha$. By Lemma~\ref{lem:kernel},
+\[
+ x=\alpha+t(\beta-\alpha),\qquad t\in\QQ.
+\]
+The sixth coordinate gives $x_6=t\in\NN$, and the second gives
+$x_2=1-t\geq0$. Thus $t\in\{0,1\}$ and $x$ is $\alpha$ or $\beta$.
+Lemma~\ref{lem:two} excludes every move of size at most 17. Replacing all
+18 rows does work. Appending zero columns preserves exactly the same
+compatibility problem, proving the assertion for every $n\geq3$.
+\end{proof}
+
+\clearpage
+\section{A direct ideal-theoretic certificate}
+This section independently explains why the obstruction concerns the
+full group-based ideal, not merely a chosen subset of moves.
+Let $k$ be a field and put
+\[
+ \mathcal F=\{(a,b,c)\in(\ZZ/17\ZZ)^3:a+b+c=0\},\qquad
+ R=k[X_r:r\in\mathcal F].
+\]
+The three-leaf group-based toric ideal is the kernel $I$ of the map
+\[
+ X_{(a,b,c)}\longmapsto U_aV_bW_c.
+\]
+Let $E=\{r_1,\ldots,r_{22}\}$ be the allowed types from Table~\ref{tab:data},
+write $X_i=X_{r_i}$, and set $R_E=k[X_1,\ldots,X_{22}]$.
+Consider
+\begin{align*}
+ F=X^\alpha-X^\beta
+   ={}&X_1^2X_2X_5^3X_8^2X_9X_{10}X_{14}X_{15}X_{17}X_{18}X_{20}^4\\
+     &-X_3^3X_4^2X_6X_7^2X_{11}X_{12}X_{13}^2X_{16}^2X_{19}X_{21}^2X_{22}.
+\end{align*}
+Both monomials have degree 18, and $F\in I$ by compatibility.
+
+\begin{proposition}\label{prop:retract}
+For the specialization $\pi:R\longrightarrow R_E$ which sets all
+variables outside $E$ to zero, one has
+\[
+ \pi(I)=I\cap R_E=(F).
+\]
+In particular, every element of $I$ of total degree at most 17 specializes
+to zero, whereas $\pi(F)=F\ne0$.
+\end{proposition}
+\begin{proof}
+First consider a binomial $X^u-X^v\in I$. If one monomial uses only
+variables in $E$, it has no column label outside the sets $S_j$.
+Its equal column multiplicities force the other monomial to have this
+same property. As $E$ contains \emph{all} flows with labels in $S_j$,
+the other monomial also uses only $E$. Thus $\pi$ either retains both
+monomials or kills both. The kernel of a monomial map is spanned by
+binomials with equal images: this follows simply by grouping terms with
+the same image monomial. It follows that $\pi(I)=I\cap R_E$.
+
+For any binomial in this restricted ideal, its exponent difference lies
+in $\ker_{\ZZ}M$. Lemma~\ref{lem:kernel}, and the coordinate
+$(\beta-\alpha)_6=1$, give
+\[
+ \ker_{\ZZ}M=\ZZ(\beta-\alpha).
+\]
+After interchanging the two monomials if necessary and factoring their
+greatest common monomial divisor, the binomial is therefore a monomial
+multiple of
+\[
+ (X^\alpha)^m-(X^\beta)^m,
+ \qquad m\geq1.
+\]
+This polynomial is divisible by $F$. Conversely, $F$ belongs to the
+restricted ideal. Hence the restricted ideal is $(F)$.
+A nonzero polynomial multiple of the homogeneous degree-18 polynomial
+$F$ cannot have total degree less than 18, which proves the last claim.
+\end{proof}
+
+Were $I$ generated by polynomials of degrees at most 17, their
+specializations would generate $\pi(I)$. All would be zero, although
+$\pi(I)=(F)\ne0$. This is a direct contradiction. It establishes the
+same degree lower bound without invoking a connectivity theorem.
+
+\clearpage
+\section{A stronger boundary obstruction and exact checks}
+\begin{corollary}
+Let $J_{\leq17}\subset I$ be the ideal generated by all elements of $I$
+of total degree at most 17. Then
+\[
+ F\notin\sqrt{J_{\leq17}}.
+\]
+Thus these low-degree equations do not even define the full variety
+set-theoretically.
+\end{corollary}
+\begin{proof}
+Define a point $P$ by $X_r(P)=1$ for the 11 row types occurring in $A$,
+and $X_r(P)=0$ for all other flows. This point has all variables outside
+$E$ zero. Proposition~\ref{prop:retract} shows that every element of
+$J_{\leq17}$ vanishes at $P$, but $F(P)=1-0=1$. No positive power of
+$F$ can therefore lie in $J_{\leq17}$.
+\end{proof}
+This is a boundary point, with many coordinates zero. No claim is made
+about the analogous question after restricting to the locus where all
+coordinates are nonzero. Also, no equality $\phi(\ZZ/17\ZZ)=18$ is asserted;
+the lower bound is sufficient to disprove the proposed inequality.
+
+\subsection*{Reproducible verification}
+The accompanying file \texttt{verify\_phylogenetic\_Z17.py} uses only the
+Python standard library. It checks all $17^3$ triples to construct the
+allowed row types, the row sums and column multiplicities, an exact
+rational row reduction, and a full enumeration of compatible count
+vectors. It returns exactly the two vectors $\alpha,\beta$.
+
+An additional exact determinant certificate is available. In the matrix
+$M$, delete rows 16 and 23 and column 22, numbering from 1 with the
+ordering specified above. The resulting $21\times21$ determinant is 17.
+Together with $M(\beta-\alpha)=0$, this certifies rank 21. The elementary
+proof does not depend on trusting this numerical determinant claim.
+
+The separately written \texttt{audit\_Z17\_independent.py} uses a different
+check. It fixes the 18 first-column entries in increasing order and counts
+all second- and third-column fillings by dynamic programming on remaining
+multiplicities. There are 96 labelled fillings in total. Table $A$
+accounts for 24 and table $B$ for 72, by multinomial counting within equal
+first-entry blocks. Every compatible unordered table has at least one
+such filling, so no third table exists. This check uses neither matrix
+rank nor the one-dimensional-kernel conclusion; it visits 981 memoized
+states. All counts are exact integers.
+
+\subsection*{Verification status}
+The displayed argument is a complete mathematical proof, with finite
+arithmetic certificates and independently implemented checks. The note
+was prepared with AI assistance. Independent expert review and priority
+assessment have not yet been obtained. The material has not been
+submitted or published by the assistant.
+
+\begin{thebibliography}{9}
+\bibitem{MV}
+Mateusz Micha\l ek and Emanuele Ventura,
+\emph{Finite phylogenetic complexity and combinatorics of tables},
+Algebra \& Number Theory \textbf{11} (2017), 235--252.
+\href{https://arxiv.org/abs/1606.07263}{arXiv:1606.07263}.
+\bibitem{SS}
+Bernd Sturmfels and Seth Sullivant,
+\emph{Toric ideals of phylogenetic invariants},
+Journal of Computational Biology \textbf{12} (2005), 204--228.
+\href{https://arxiv.org/abs/q-bio/0402015}{arXiv:q-bio/0402015}.
+Conjecture numbering in this note refers explicitly to the arXiv version.
+\end{thebibliography}
+\end{document}
