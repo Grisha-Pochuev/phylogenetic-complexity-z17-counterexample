@@ -28,24 +28,29 @@ trusting any numerical approximation.
 
 ## Contents
 
-- `paper/phylogenetic_Z17_counterexample_EN.pdf` — five-page English manuscript.
-- `paper/phylogenetic_Z17_counterexample_EN.tex` — LaTeX source of the manuscript.
-- `proof/phylogenetic_Z17_complete_proof_RU.md` — expanded Russian proof with the
-  explicit tables, hand kernel elimination, direct ideal-theoretic argument, and
-  boundary-point obstruction.
-- `data/tables_Z17.json` — the two expanded 18-row tables and the allowed row types.
-- `verification/verify_phylogenetic_Z17.py` — primary exact check; standard library only.
-- `verification/audit_Z17_independent.py` — independently written dynamic-programming
-  check that does not use the matrix-rank argument; standard library only.
-- `verification/audit_Z17_symbolic.py` — optional independent symbolic check using SymPy.
-- `verification/results/` — saved exact outputs from the checks.
+- `paper/phylogenetic_Z17_counterexample_EN.tex` — canonical LaTeX source of the English manuscript, with **Grisha Pochuev** as author.
+- `paper/phylogenetic_Z17_counterexample_EN.pdf` — compact five-page reviewer copy. Run `make paper` to regenerate the native LaTeX typeset PDF from the canonical source.
+- `proof/phylogenetic_Z17_complete_proof_RU.md` — expanded Russian proof with the explicit tables, hand kernel elimination, direct ideal-theoretic argument, and boundary-point obstruction.
+- `data/tables_Z17.json` — the two expanded 18-row tables, allowed row types, and multiplicity vectors.
+- `verification/verify_phylogenetic_Z17.py` — primary exact check; Python standard library only.
+- `verification/audit_Z17_independent.py` — independently written dynamic-programming check that does not use the matrix-rank argument; Python standard library only.
+- `verification/audit_Z17_symbolic.py` — optional symbolic audit using exact SymPy arithmetic.
+- `verification/results/` — saved exact outputs and a log of the local re-run.
 - `INDEPENDENT_VERIFICATION.md` — short audit protocol and expected invariants.
-- `.github/workflows/verify.yml` — **manual-only** GitHub Actions workflow. It does not
-  run on push or pull request, so it consumes no Actions capacity unless explicitly started.
+- `Makefile` — convenience targets for verification and manuscript rebuilding.
+- `requirements-symbolic.txt` — pinned optional dependency for the symbolic audit.
+- `CITATION.cff` — citation metadata.
+- `.github/workflows/verify.yml` — **manual-only** GitHub Actions workflow. It does not run on push or pull request.
 
 ## Fast independent verification
 
-Python 3.9+ is sufficient for the two core checks:
+Python 3.9+ is sufficient for the two core checks. Either run
+
+```bash
+make verify-core
+```
+
+or directly:
 
 ```bash
 python verification/verify_phylogenetic_Z17.py
@@ -62,58 +67,43 @@ Expected core facts:
 - the exact rational incidence matrix has rank 21 and nullity 1;
 - the specified \(21\times21\) minor has determinant 17;
 - the compatible fiber contains exactly two unordered tables, \(A\) and \(B\);
-- the independent dynamic-programming audit counts exactly 96 labelled fillings:
-  24 from \(A\) and 72 from \(B\), using 981 memoized states;
+- the independent dynamic-programming audit counts exactly 96 labelled fillings: 24 from \(A\) and 72 from \(B\), using 981 memoized states;
 - therefore the minimum nontrivial move between the two tables has size 18.
 
 For the optional symbolic audit:
 
 ```bash
-python -m pip install sympy==1.14.0
-python verification/audit_Z17_symbolic.py
+python -m pip install -r requirements-symbolic.txt
+make verify-symbolic
 ```
 
-## GitHub Actions without consuming this repository's current runners
+To build the typeset manuscript from source (requires a LaTeX installation):
 
-The included workflow is triggered only by `workflow_dispatch`. Merely committing it
-runs nothing. An independent reviewer can fork the repository and start the workflow
-on the fork, using the reviewer's own GitHub Actions allocation, or simply run the two
-standard-library scripts locally.
+```bash
+make paper
+```
+
+## GitHub Actions without consuming the author's current runners
+
+The included workflow is triggered only by `workflow_dispatch`. Merely committing it runs nothing. An independent reviewer can fork the repository and manually start the workflow on the fork, using the reviewer's own GitHub Actions allocation. The reviewer can also avoid Actions entirely and run the two standard-library scripts locally.
 
 ## Why the obstruction is not just a failed direct move
 
-Every compatible table with the displayed column multisets is either \(A\) or \(B\).
-A move involving at most 17 of the 18 rows leaves at least one old row unchanged, while
-\(A\) and \(B\) have disjoint row supports. Therefore no first nontrivial move out of
-\(A\) exists. This rules out every chain of moves of size at most 17, not merely a
-direct conversion.
+Every compatible table with the displayed column multisets is either \(A\) or \(B\). A move involving at most 17 of the 18 rows leaves at least one old row unchanged, while \(A\) and \(B\) have disjoint row supports. Therefore no first nontrivial move out of \(A\) exists. This rules out every chain of moves of size at most 17, not merely a direct conversion.
 
-The manuscript also gives a direct ideal-theoretic certificate showing that the degree-18
-binomial is not generated by elements of degree at most 17 in the full group-based toric
-ideal. A stronger boundary-point argument shows it is not even in the radical of the
-ideal generated by all equations of degree at most 17.
+The manuscript also gives a direct ideal-theoretic certificate showing that the degree-18 binomial is not generated by elements of degree at most 17 in the full group-based toric ideal. A stronger boundary-point argument shows it is not even in the radical of the ideal generated by all equations of degree at most 17.
 
 ## Reproducibility status
 
-The computations use exact integer or rational arithmetic. On 9 September 2026 the
-three verification programs were re-run in an isolated local environment (not GitHub
-Actions) and reproduced the stored invariants. The English PDF was rebuilt from the
-included LaTeX source after adding the author name.
+The computations use exact integer or rational arithmetic. On 9 September 2026 the three verification programs were re-run in an isolated local environment, without GitHub Actions, and reproduced the stored invariants. The canonical LaTeX manuscript was compiled locally after adding the author name **Grisha Pochuev**, and the resulting first page was visually checked. The compact PDF in `paper/` is supplied for immediate reading; the `.tex` file remains the canonical manuscript source.
 
-This repository is intended for independent checking. External expert review,
-publication priority, and publication status are not asserted here.
+This repository is intended for independent checking. External expert review, publication priority, and publication status are not asserted here.
 
 ## References
 
-1. Mateusz Michałek and Emanuele Ventura, *Finite phylogenetic complexity and
-   combinatorics of tables*, Algebra & Number Theory 11 (2017), 235–252;
-   arXiv:1606.07263. See Section 2 and Conjectures 4.1–4.2.
-2. Bernd Sturmfels and Seth Sullivant, *Toric ideals of phylogenetic invariants*,
-   Journal of Computational Biology 12 (2005), 204–228; arXiv:q-bio/0402015.
-   Conjecture 27 in the arXiv version.
+1. Mateusz Michałek and Emanuele Ventura, *Finite phylogenetic complexity and combinatorics of tables*, Algebra & Number Theory 11 (2017), 235–252; arXiv:1606.07263. See Section 2 and Conjectures 4.1–4.2.
+2. Bernd Sturmfels and Seth Sullivant, *Toric ideals of phylogenetic invariants*, Journal of Computational Biology 12 (2005), 204–228; arXiv:q-bio/0402015. Conjecture 27 in the arXiv version.
 
 ## AI-assistance disclosure
 
-The manuscript and verification package were prepared with AI assistance. The claim is
-presented with explicit finite data, a complete written argument, and reproducible exact
-checks so that it can be audited independently of that assistance.
+The manuscript and verification package were prepared with AI assistance. The claim is presented with explicit finite data, a complete written argument, and reproducible exact checks so that it can be audited independently of that assistance.
