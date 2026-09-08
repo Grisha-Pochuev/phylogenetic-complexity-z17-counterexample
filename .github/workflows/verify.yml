@@ -1,0 +1,32 @@
+name: Exact verification
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Primary exact verifier
+        run: python verification/verify_phylogenetic_Z17.py
+
+      - name: Independent dynamic-programming audit
+        run: python verification/audit_Z17_independent.py
+
+      - name: Install optional symbolic dependency
+        run: python -m pip install sympy==1.14.0
+
+      - name: Symbolic audit
+        run: python verification/audit_Z17_symbolic.py
