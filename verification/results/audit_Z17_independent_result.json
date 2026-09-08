@@ -1,0 +1,11 @@
+{
+  "method": "dynamic_programming_fixed_first_column",
+  "labelled_fillings_total": 96,
+  "labelled_fillings_A": 24,
+  "labelled_fillings_B": 72,
+  "dynamic_programming_states": 981,
+  "unordered_compatible_tables": 2,
+  "no_common_row": true,
+  "minimum_nontrivial_move_size": 18,
+  "independent_of_rank_calculation": true
+}
